@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= 'History'
+  if q
+    h2= q
+  if histories
+    - for (var i = 0; i < histories.length; i++) {
+      div
+        p= 'Updated: ' + histories[i].updated_at
+        code= histories[i].markdown
+    - }
+  p
+    a(href='/?q=' + q)= '戻る'
