@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1= title
+  form(target='_self', action='/?q=' + title, method='post')
+    input(type='hidden', name='word' value= title)
+    textarea(name='markdown', style='width:100%;height:480px;')= markdown
+    br
+    input(type='submit', value='投稿')

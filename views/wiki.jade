@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title
+  div(id='content')
+  form(target='_self', action='/edit', method='get')
+    input(type='hidden' name='q' value= title)
+    input(type='submit' value='編集')
+  script(type='text/template' id='markdown')= markdown
+  script(type='text/javascript',
+         src='https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js')
+  script(type='text/javascript').
+    document.getElementById('content').innerHTML =
+        marked(document.getElementById('markdown').innerHTML);
