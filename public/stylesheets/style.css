@@ -1,8 +1,29 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+div.index {
+  text-align: center;
+  padding: 30px;
+  margin:0 auto;
+  width: 670px;
+}
+
+div#edit-history {
+  text-align: left;
+}
+
+div {
+  display: block;
 }
 
 a {
   color: #00B7FF;
+}
+
+input.text-form {
+  width: 100%;
+  height: 30px;
 }

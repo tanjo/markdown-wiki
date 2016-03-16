@@ -13,7 +13,13 @@ router.get('/', function(req, res, next) {
       }
     });
   } else {
-    res.render('index', { title: 'ようこそ Markdown Wiki へ'});
+    mongo.history10(function(history, result) {
+      if (result === "success") {
+        res.render('index', { title: 'ようこそ Markdown Wiki へ', history: history });
+      } else {
+        res.render('index', { title: 'ようこそ Markdown Wiki へ' });
+      }
+    });
   }
 });
 
@@ -23,7 +29,7 @@ router.post('/', function(req, res, next) {
       res.redirect(303, "/?q=" + req.body.word);
     });
   } else {
-    res.render('index', { title: 'ようこそ Markdown Wiki へ'});
+    res.render('index', { title: 'ようこそ Markdown Wiki へ' });
   }
 });
 

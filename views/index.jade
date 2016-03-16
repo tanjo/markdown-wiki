@@ -1,7 +1,15 @@
 extends layout
 
 block content
-  h1= title
-  form(target='_self', method='get')
-    input(type='text', name='q')
-    input(type='submit', value='検索')
+  div(class="index")
+    h1= title
+    div(id="main-container")
+      form(target='_self', method='get')
+        input(class='text-form', type='text', name='q', placeholder='Wiki を検索')
+    div(id="edit-history")
+      if history
+        -   for (var i = 0; i < history.length; i++) {
+            p
+              span= history[i].updated_at.getFullYear() + '/' + ('0' + (history[i].updated_at.getMonth() + 1)).slice(-2) + '/' + ('0' + (history[i].updated_at.getDate())).slice(-2) + ' ' + ('0' + (history[i].updated_at.getHours())).slice(-2) + ':' + ('0' + (history[i].updated_at.getMinutes())).slice(-2) + ':' + ('0' + (history[i].updated_at.getSeconds())).slice(-2) + ' (' + ['日', '月', '火', '水', '木', '金', '土'][history[i].updated_at.getDay()] + ') '
+              a(href='http://localhost:3000/?q=' + history[i].q)= history[i].q
+        -   }

@@ -6,6 +6,8 @@ block content
   a(href='/edit?q=' + title)= '編集'
   span= ' '
   a(href='/history?q=' + title)= '履歴'
+  span= ' '
+  a(href='/')= 'TOP'
   script(type='text/template' id='markdown')= markdown
   script(type='text/javascript',
          src='https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js')
