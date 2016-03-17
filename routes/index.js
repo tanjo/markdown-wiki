@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
       }
     });
   } else {
-    mongo.history10(function(history, result) {
+    mongo.history20(function(history, result) {
       if (result === "success") {
         res.render('index', { title: 'ようこそ Markdown Wiki へ', history: history });
       } else {

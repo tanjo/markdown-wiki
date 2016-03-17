@@ -7,11 +7,23 @@ var Wiki = mongoose.model('Wiki', {
   updated_at: Date
 });
 
-module.exports.history10 = function(callback) {
-  Wiki.find().sort({ updated_at: 'desc' }).limit(10).exec(function(err, docs) {
-    if (docs) {
-      if (docs.length > 0) {
-        callback(docs, "success");
+module.exports.history20 = function(callback) {
+  Wiki.find().sort({ updated_at: 'desc' }).limit(20).exec(function(err, docs) {
+    var list = [];
+    for (var i = 0; i < docs.length; i++) {
+      var exists = false;
+      for (var j = 0; j < list.length; j++) {
+        if (list[j].q === docs[i].q) {
+          exists = true;
+        }
+      }
+      if (!exists) {
+        list.push(docs[i]);
+      }
+    }
+    if (list) {
+      if (list.length > 0) {
+        callback(list, "success");
         return;
       }
     }

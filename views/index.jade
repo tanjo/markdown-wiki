@@ -5,7 +5,7 @@ block content
     h1= title
     div(id="main-container")
       form(target='_self', method='get')
-        input(class='text-form', type='text', name='q', placeholder='Wiki を検索')
+        input(class='text-form', type='text', name='q', placeholder='Wiki を検索または作成')
     div(id="edit-history")
       if history
         -   for (var i = 0; i < history.length; i++) {
