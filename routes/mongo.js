@@ -7,20 +7,27 @@ var Wiki = mongoose.model('Wiki', {
   updated_at: Date
 });
 
-module.exports.history20 = function(callback) {
-  Wiki.find().sort({ updated_at: 'desc' }).limit(20).exec(function(err, docs) {
-    var list = [];
-    for (var i = 0; i < docs.length; i++) {
-      var exists = false;
-      for (var j = 0; j < list.length; j++) {
-        if (list[j].q === docs[i].q) {
-          exists = true;
-        }
-      }
-      if (!exists) {
-        list.push(docs[i]);
+var Utils = function() {
+};
+Utils.prototype.unique = function(docs) {
+  var list = [];
+  for (var i = 0; i < docs.length; i++) {
+    var exists = false;
+    for (var j = 0; j < list.length; j++) {
+      if (list[j].q === docs[i].q) {
+        exists = true;
       }
     }
+    if (!exists) {
+      list.push(docs[i]);
+    }
+  }
+  return list;
+};
+
+module.exports.allHistory = function(limit, callback) {
+  Wiki.find().sort({ updated_at: 'desc' }).limit(limit).exec(function(err, docs) {
+    var list = new Utils().unique(docs);
     if (list) {
       if (list.length > 0) {
         callback(list, "success");
