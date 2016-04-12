@@ -14,3 +14,9 @@ npm start
 - [express](https://www.npmjs.com/package/express)
 - [marked](https://www.npmjs.com/package/marked)
 - [mongoose](https://www.npmjs.com/package/mongoose)
+
+## CHANGELOG
+
+### Ver 0.0.0
+
+- とりあえず稼働できるようにした
