@@ -3,31 +3,53 @@ mongoose.connect('mongodb://localhost/markdown-wiki');
 var Wiki = mongoose.model('Wiki', {
   q: String,
   markdown: String,
-  created_at: Date,
-  updated_at: Date
+  created_at: { type: Date, default: Date.now },
+  updated_at: { type: Date, default: Date.now }
+});
+
+var Topic = mongoose.model('Topic', {
+  q: String,
+  archives: [],
+  created_at: { type: Date, default: Date.now },
+  updated_at: { type: Date, default: Date.now }
 });
 
 var Utils = function() {
 };
-Utils.prototype.unique = function(docs) {
-  var list = [];
-  for (var i = 0; i < docs.length; i++) {
-    var exists = false;
-    for (var j = 0; j < list.length; j++) {
-      if (list[j].q === docs[i].q) {
-        exists = true;
+
+var untopicWikis = [];
+
+function addTopic() {
+  var wiki = untopicWikis.pop();
+  Topic.findOne({ q: wiki.q }, function(err, topic) {
+    if (!topic) {
+      console.log("[Markdown wiki] New Topic: " + wiki.q);
+      topic = new Topic({
+        q: wiki.q
+      });
+    }
+    topic.archives.push(wiki._id);
+    topic.updated_at = new Date();
+    topic.save(function(err) {
+      if (untopicWikis.length === 0) {
+        return;
       }
-    }
-    if (!exists) {
-      list.push(docs[i]);
-    }
-  }
-  return list;
+      addTopic();
+    });
+  });
+}
+
+// WARNING: Topic がぐちゃぐちゃになったらやるやつなので基本やってはいけない
+module.exports.refresh = function(callback) {
+  Topic.remove({});
+  Wiki.find({}, function(err, docs) {
+    untopicWikis = docs;
+    addTopic();
+  });
 };
 
 module.exports.allHistory = function(limit, callback) {
-  Wiki.find().sort({ updated_at: 'desc' }).limit(limit).exec(function(err, docs) {
-    var list = new Utils().unique(docs);
+  Topic.find().sort({ updated_at: 'desc' }).limit(limit).exec(function(err, list) {
     if (list) {
       if (list.length > 0) {
         callback(list, "success");
@@ -83,6 +105,8 @@ module.exports.save = function(q, markdown, callback) {
       if (err) {
         callback("failure");
       } else {
+        untopicWikis = [data];
+        addTopic();
         callback("success");
       }
     });
