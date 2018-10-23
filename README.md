@@ -6,6 +6,7 @@ Markdown を利用した Wiki です.
 
 ```
 npm install
+mongod -dbpath /usr/local/var/mongodb    
 npm start
 ```
 
