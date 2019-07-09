@@ -11,5 +11,5 @@ block content
         -   for (var i = 0; i < history.length; i++) {
             p
               span= history[i].updated_at.getFullYear() + '/' + ('0' + (history[i].updated_at.getMonth() + 1)).slice(-2) + '/' + ('0' + (history[i].updated_at.getDate())).slice(-2) + ' ' + ('0' + (history[i].updated_at.getHours())).slice(-2) + ':' + ('0' + (history[i].updated_at.getMinutes())).slice(-2) + ':' + ('0' + (history[i].updated_at.getSeconds())).slice(-2) + ' (' + ['日', '月', '火', '水', '木', '金', '土'][history[i].updated_at.getDay()] + ') '
-              a(href='http://localhost:3000/?q=' + history[i].q)= history[i].q
+              a(href='/?q=' + history[i].q)= history[i].q
         -   }

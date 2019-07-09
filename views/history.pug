@@ -8,7 +8,8 @@ block content
     - for (var i = 0; i < histories.length; i++) {
       div
         p= 'Updated: ' + histories[i].updated_at
-        code= histories[i].markdown
+        pre
+          code= histories[i].markdown
     - }
   p
     a(href='/?q=' + q)= '戻る'
